@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Harer Eggs Farm</title>
+<link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<header>
+    <div class="logo">🥚 Harer Eggs Farm</div>
+    <p>Fresh • Farm Direct • Healthy</p>
+</header>
+
+<!-- Image Slider -->
+<section class="slider">
+    <img src="farm1.jpg" class="slide active">
+    <img src="farm2.jpg" class="slide">
+    <img src="farm3.jpg" class="slide">
+</section>
+
+<!-- Products -->
+<section class="products">
+    <div class="card">
+        <h2>6 Eggs Pack</h2>
+        <p class="price">₹60</p>
+        <button onclick="addToCart('6 Eggs Pack', 60)">Add to Cart</button>
+    </div>
+
+    <div class="card">
+        <h2>12 Eggs Pack</h2>
+        <p class="price">₹120</p>
+        <button onclick="addToCart('12 Eggs Pack', 120)">Add to Cart</button>
+    </div>
+</section>
+
+<!-- Cart + Delivery -->
+<section class="cart">
+    <h2>🛒 Your Cart</h2>
+    <ul id="cartItems"></ul>
+    <p><strong>Total: ₹<span id="total">0</span></strong></p>
+
+    <h3>🚚 Delivery Details</h3>
+    <input type="text" id="customerName" placeholder="Enter Your Name">
+    <br><br>
+    <textarea id="customerAddress" placeholder="Enter Full Delivery Address"></textarea>
+    <br><br>
+
+    <button onclick="checkout()">Order on WhatsApp</button>
+</section>
+
+<!-- UPI Payment -->
+<section class="payment">
+    <h2>💳 Pay Online</h2>
+    <a href="upi://pay?pa=hareromkar405-1@oksbi&pn=Harer%20Eggs%20Farm&cu=INR" class="upi-btn">
+        Pay via UPI
+    </a>
+    <p>UPI ID: hareromkar405-1@oksbi</p>
+</section>
+
+<footer>
+    <p>WhatsApp Order: 9356601848</p>
+</footer>
+
+<script>
+let cart = [];
+let total = 0;
+
+function addToCart(item, price) {
+    cart.push(item);
+    total += price;
+    document.getElementById("cartItems").innerHTML += <li>${item} - ₹${price}</li>;
+    document.getElementById("total").innerText = total;
+}
+
+function checkout() {
+
+    let name = document.getElementById("customerName").value;
+    let address = document.getElementById("customerAddress").value;
+
+    if(name === "" || address === "") {
+        alert("Please fill delivery details");
+        return;
+    }
+
+    let message = "Hello Harer Eggs Farm,%0A";
+    message += "Name: " + name + "%0A";
+    message += "Address: " + address + "%0A%0A";
+    message += "Order Details:%0A";
+
+    cart.forEach(item => {
+        message += "- " + item + "%0A";
+    });
+
+    message += "Total: ₹" + total;
+
+    window.open("https://wa.me/919356601848?text=" + message);
+}
+
+/* Image Slider */
+let slides = document.querySelectorAll(".slide");
+let index = 0;
+
+setInterval(() => {
+    slides[index].classList.remove("active");
+    index = (index + 1) % slides.length;
+    slides[index].classList.add("active");
+}, 3000);
+</script>
+
+</body>
+</html>
